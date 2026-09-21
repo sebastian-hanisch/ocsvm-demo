@@ -16,7 +16,7 @@ elliptic-envelope-demo (Wurzel: robuste Ellipse)
   ├─ lof-demo → feature-bagging-demo (lokale Dichte; Ensembles gegen viele Merkmale)     [beide gebaut]
   ├─ ocsvm-demo → deepsvdd-demo (gelernte Grenze; gelernte Abbildung)                    [dieses Stück; Deep SVDD gebaut]
   ├─ isolation-forest-demo → extended-isolation-forest-demo (Zufallsbäume)               [beide gebaut]
-  └─ Autoencoder                (Rekonstruktionsfehler)                                  [nicht gebaut]
+  └─ autoencoder-anomalie-demo  (Rekonstruktionsfehler)                                  [gebaut]
 ```
 
 | Frage | Ergebnis (300 Touren, 12 Merkmale, 10 % verstreute Anomalien im Abstand 6 Faktor-σ, ein Normalbereich, Rauschen 0.25; One-Class SVM mit ν = 0.1 und γ = γ₀ = 1 / p (Voreinstellung wie 'scale' in scikit-learn), Schwelle f < 0, LOF k = 20 und Schwelle 1.5, Isolation Forest 100 Bäume × ψ = 256 und Schwelle 0.5, robust χ²-Quantil 0.975; Mittel über 5 feste Datensätze, Seeds 100000–100004) |
