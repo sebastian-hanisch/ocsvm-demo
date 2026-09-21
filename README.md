@@ -9,12 +9,12 @@ und die robuste Schätzung der Wurzel ([elliptic-envelope-demo](../elliptic-enve
 
 **Einordnung in die Reihe (die Kanten des Graphen):** die One-Class SVM ist ein **eigener Ast direkt nach der Wurzel**. Die Wurzel kann nur **eine konvexe Ellipse**; die One-Class SVM lernt stattdessen eine **nichtlineare Grenze** (Kernel-Trick, RBF) und braucht dafür **zwei Regler, ν und γ**.
 Ergebnis in Kürze: **bei passendem γ ist sie so gut wie LOF und Isolation Forest (F1 0.95) und bei 40 Rauschmerkmalen der beste Detektor an der Schwelle (F1 0.92 gegen 0.00 / 0.56 / 0.35); bei der Voreinstellung γ = 1 / p ist sie schwächer (F1 0.67), bei zu schmalem Kernel markiert die Schwelle nichts (F1 0.00), und ν muss größer als der Anteil der Anomalien sein – schon für die Rangfolge (AUC 0.32 bei 45 % Anomalien und ν = 0.1).**
-Die Linie hat **keinen Konvergenzpunkt**; der Nachfolger wäre Deep SVDD (gelernte Merkmalsabbildung statt festem Kernel; nicht gebaut).
+Die Linie hat **keinen Konvergenzpunkt**; der Nachfolger ist [deepsvdd-demo](../deepsvdd-demo) (gelernte Merkmalsabbildung statt festem Kernel; Ergebnis: die Abhängigkeit von γ zieht auf Epochen, Breite und Netz-Seed um, und das Training verschlechtert die Rangfolge).
 ```
 elliptic-envelope-demo (Wurzel: robuste Ellipse)
   ├─ ecod-demo                  (Kontrast: verteilungsfrei)                              [gebaut]
   ├─ lof-demo → feature-bagging-demo (lokale Dichte; Ensembles gegen viele Merkmale)     [beide gebaut]
-  ├─ ocsvm-demo → Deep SVDD     (gelernte Grenze; gelernte Abbildung)                    [dieses Stück; Deep SVDD nicht gebaut]
+  ├─ ocsvm-demo → deepsvdd-demo (gelernte Grenze; gelernte Abbildung)                    [dieses Stück; Deep SVDD gebaut]
   ├─ isolation-forest-demo → extended-isolation-forest-demo (Zufallsbäume)               [beide gebaut]
   └─ Autoencoder                (Rekonstruktionsfehler)                                  [nicht gebaut]
 ```
