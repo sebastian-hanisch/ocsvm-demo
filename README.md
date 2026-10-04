@@ -29,11 +29,11 @@ elliptic-envelope-demo (Wurzel: robuste Ellipse)
 | Gekrümmter Normalbereich | ✅ Die gelernte Grenze folgt der Krümmung: F1 bei Krümmung 0 / 0.25 / 0.5 / 0.75 / 1 steigt von 0.67 auf 0.78 / 0.84 / 0.85 / 0.85 (AUC 0.99–0.98), während der LOF von 0.94 auf 0.74 und die robuste Ellipse von 0.84 auf 0.38 fallen; der Isolation Forest bleibt bei 0.95–0.98 |
 | Rauschmerkmale | ✅/❌ Bei γ₀: AUC 0.95 → 0.91, Recall 0.52 → 0.25, F1 0.67 → 0.39 bei 40 Rauschmerkmalen (LOF-Recall 0.00, robust AUC 0.88). **Mit γ = 0.1 · γ₀ bleibt AUC 0.99–1.00 und F1 0.92–0.95: bei 40 Rauschmerkmalen der beste Detektor an der Schwelle** (LOF 0.00, Isolation Forest 0.56, robust 0.35) – der breite Kernel mittelt unabhängiges Rauschen weg |
 | Dichte Gruppe | ➖ AUC bei 10 % / 30 % (ν = 0.1): 0.71 / 0.74 (LOF 0.35 / 0.47, Isolation Forest 0.95 / 0.70, robust 1.00 / 0.49, **ECOD 0.98 / 0.84**). Mit ν = 0.3 und γ = 0.1 · γ₀ bei 30 %: F1 0.46 gegen 0.24 (Isolation Forest), 0.07 (robust), 0.00 (LOF) |
-| Lücke zwischen Betriebsarten | ⚠️ **Als einziger Detektor über Raten**: AUC 0.64 (2 Betriebsarten) und 0.82 (3) bei γ₀ (LOF 0.53 / 0.36, Isolation Forest 0.54 / 0.27, robust 0.40 / 0.38, ECOD 0.04 / 0.01) – aber die Schwelle findet die Lücke kaum (Recall 3 % / 1 %). Bei breitem Kernel (γ ≤ 0.25 · γ₀) ist die AUC **unter Raten** (0.02 bzw. 0.00): die Lücke liegt im Innern der Grenze, wie bei der Ellipse |
+| Lücke zwischen Betriebsarten | ⚠️ **Als einziger Detektor deutlich über Raten**: AUC 0.64 (2 Betriebsarten) und 0.82 (3) bei γ₀ (LOF 0.53 / 0.36, Isolation Forest 0.54 / 0.27, robust 0.40 / 0.38, ECOD 0.04 / 0.01) – aber die Schwelle findet die Lücke kaum (Recall 3 % / 1 %). Bei breitem Kernel (γ ≤ 0.25 · γ₀) ist die AUC **unter Raten** (0.02 bzw. 0.00): die Lücke liegt im Innern der Grenze, wie bei der Ellipse |
 | Korrelationsbruch | ⚠️ AUC **0.88** (γ₀; F1 0.30) gegen LOF 0.99, robust 1.00, Isolation Forest 0.80, ECOD 0.56. Mit ν = 0.3 und γ = 2 · γ₀ AUC 0.98, aber F1 nur 0.57, weil die Schwelle ν der Touren markiert |
 | Kleine Stichproben | ❌ Bei ν = 0.1 markiert die Schwelle bei 20–50 Touren **nichts** (F1 0.00; AUC 0.76 / 0.88 / 0.86); F1 bei 100 / 200 / 400 / 600 Touren 0.10 / 0.64 / 0.72 / 0.76 (LOF 0.87 / 0.91 / 0.94 / 0.90) |
 | Standardisierung | ➖ Ohne sie sinkt die AUC von 0.95 auf 0.79 (F1 unverändert bei 0.67 / 0.68); LOF von 1.00 auf 0.87 (F1 0.94 → 0.68) |
-| Falsch angenommener Anteil | ➖ kostet alle vier fast gleich: F1 bei ½× / 1× / 2× des wahren Anteils One-Class SVM 0.64 / 0.67 / 0.63, LOF und Isolation Forest 0.67 / 0.97 / 0.67 |
+| Falsch angenommener Anteil | ➖ bringt alle vier auf fast denselben F1: F1 bei ½× / 1× / 2× des wahren Anteils One-Class SVM 0.64 / 0.67 / 0.63, LOF und Isolation Forest 0.67 / 0.97 / 0.67 |
 | Rechenzeit und Speicher | ➖ Im gemessenen Bereich (bis 600 Touren) höchstens etwa 15 ms – so viel wie der LOF (15 ms bei 600 Touren), weit weniger als der Isolation Forest (60–390 ms). Die Kernmatrix wächst quadratisch: 0.08 / 0.72 / 2.9 MB bei 100 / 300 / 600 Touren; bei 10 000 Touren wären es 800 MB (gerechnet, nicht gemessen) |
 
 ## Was die Demo zeigt
@@ -119,6 +119,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Anomalie-Erkennung: Ellipse bis Autoencoder](https://sebastianhanisch.net/konzepte-anomalie-erkennung.html).

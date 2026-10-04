@@ -134,7 +134,7 @@ Stützvektor-Anteil), und **γ** die Breite der Kuppeln. Diese Demo misst, wie s
 st.caption(
     "Anders als die Fall-Demos im Portfolio, die an einem Anwendungsfall mehrere Verfahren vergleichen, zeigt diese Demo - siebtes Stück der Anomalie-Erkennung-Linie der \"Konzepte\"-Reihe - **ein** Verfahren an einem wachsenden Beispiel. "
     "Szenario, LOF, Isolation Forest und die robuste Schätzung der Wurzel sind wortgleich aus den Vorgänger-Demos übernommen (die klassische Schätzung entfällt, damit die Balken lesbar bleiben); ECOD tritt nur im Szenarien-Experiment als Kontrast auf. "
-    "Die Linie hat keinen Konvergenzpunkt; die One-Class SVM ist ein eigener Ast, ihr Nachfolger wäre Deep SVDD (gelernte Merkmalsabbildung statt festem Kernel; noch nicht gebaut)."
+    "Die Linie hat keinen Konvergenzpunkt; die One-Class SVM ist ein eigener Ast, ihr Nachfolger ist Deep SVDD (gelernte Merkmalsabbildung statt festem Kernel; eigene Demo)."
 )
 
 with st.expander("So funktioniert die One-Class SVM", expanded=True):
@@ -196,13 +196,13 @@ with st.sidebar:
     )
     contamination = st.slider(
         "Anteil der Anomalien [%]", *bounds("contamination_slider"), key="contamination_slider",
-        help="Wie viele Touren Sonderfahrten sind. Bei festem ν = 0.1 ist die AUC der One-Class SVM bei 2 / 5 / 10 / 20 / 30 / 40 / 45 % 1.00 / 1.00 / 0.95 / 0.77 / 0.56 / 0.37 / 0.32 - ab einem Anteil über ν **unter Raten** "
+        help="Wie viele Touren Sonderfahrten sind. Bei festem ν = 0.1 ist die AUC der One-Class SVM bei 2 / 5 / 10 / 20 / 30 / 40 / 45 % 1.00 / 1.00 / 0.95 / 0.77 / 0.56 / 0.37 / 0.32 - ab einem Anteil über ν fällt sie, ab 40 % **unter Raten** "
              "(LOF 1.00 / 1.00 / 1.00 / 0.99 / 0.90 / 0.72 / 0.64, Isolation Forest und ECOD überall etwa 1.00, robust 1.00 bis 0.87). Die Grenze wird auf den Trainingsdaten gelernt; ν muss größer als der Anteil sein.",
     )
     kind = st.selectbox(
         "Art der Anomalien", kind_options(n_modes), key="kind_select", format_func=lambda k: C.KIND_LABELS[k],
         help="Verstreut: jede Anomalie in einer anderen Richtung. Dichte Gruppe (bei ν = 0.1): bei 10 % / 30 % AUC der One-Class SVM 0.71 / 0.74 (LOF 0.35 / 0.47, Isolation Forest 0.95 / 0.70, robust 1.00 / 0.49, ECOD 0.98 / 0.84). "
-             "In der Lücke: 2 Betriebsarten 0.64, 3 Betriebsarten 0.82 - als einziger Detektor über Raten (LOF 0.53 / 0.36, Isolation Forest 0.54 / 0.27, robust 0.40 / 0.38, ECOD 0.04 / 0.01). "
+             "In der Lücke: 2 Betriebsarten 0.64, 3 Betriebsarten 0.82 - als einziger Detektor deutlich über Raten (LOF 0.53 / 0.36, Isolation Forest 0.54 / 0.27, robust 0.40 / 0.38, ECOD 0.04 / 0.01). "
              "Korrelationsbruch: Merkmale der Anomalien je Spalte aus den Normalen neu gezogen - One-Class SVM 0.88, LOF 0.99, robust 1.00, Isolation Forest 0.80, ECOD 0.56.",
     )
     if kind not in ("gap", "decorrelated"):
@@ -550,7 +550,7 @@ if st.session_state.get("threshold_on"):
     c2.markdown("**F1 bei falsch angenommenem Anteil** (½×, 1×, 2× des wahren)")
     c2.plotly_chart(build_wrong_share(tt["wrong_share"]), width="stretch", key="wrong_share_chart")
     st.caption("Links (Standardfall, γ₀): F1 bei ν = 0.01 / 0.02 / 0.05 / 0.1 / 0.2 / 0.3 / 0.5 gleich 0.00 / 0.00 / 0.03 / 0.67 / 0.71 / 0.51 / 0.34, Recall 0.00 / 0.00 / 0.01 / 0.52 / 1.00 / 1.00 / 1.00 - die Schwelle f < 0 liefert nur in einem schmalen Bereich um ν = 0.1 bis 0.2 brauchbare Werte. "
-               "Rechts: ein falsch angenommener Anteil kostet alle vier Detektoren fast gleich viel (One-Class SVM 0.64 / 0.67 / 0.63, LOF und Isolation Forest 0.67 / 0.97 / 0.67), denn dann entscheidet nur die Rangfolge; "
+               "Rechts: ein falsch angenommener Anteil bringt alle vier Detektoren auf fast denselben F1 (One-Class SVM 0.64 / 0.67 / 0.63, LOF und Isolation Forest 0.67 / 0.97 / 0.67), denn dann entscheidet nur die Rangfolge; "
                "die One-Class SVM verliert im Standardfall schon beim wahren Anteil gegen LOF und Isolation Forest, weil ihre Rangfolge schlechter ist (AUC 0.95).")
 
 st.markdown("---")
@@ -585,7 +585,7 @@ st.markdown(
 """
 )
 st.caption(
-    "Die Nachbarn der Anomalie-Erkennung-Linie: die Wurzel Elliptic Envelope, LOF, Feature Bagging, Isolation Forest, Extended IF und ECOD (gebaut), Deep SVDD und ein Autoencoder (noch nicht gebaut). "
+    "Die Nachbarn der Anomalie-Erkennung-Linie: die Wurzel Elliptic Envelope, LOF, Feature Bagging, Isolation Forest, Extended IF, ECOD, Deep SVDD und der Autoencoder (alle gebaut). "
     "Keiner ist überlegen: die One-Class SVM lernt eine Grenze, die der Krümmung folgt und bei passendem γ Rauschmerkmale wegmittelt - zum Preis von zwei Reglern, von denen der eine (ν) den Anteil der Anomalien kennen muss und der andere (γ) je nach Daten verschieden liegt."
 )
 
@@ -617,6 +617,6 @@ st.markdown("---")
 
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Anomalie-Erkennung: Ellipse bis Autoencoder](https://sebastianhanisch.net/konzepte-anomalie-erkennung.html)."
 )
