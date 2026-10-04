@@ -133,7 +133,7 @@ Stützvektor-Anteil), und **γ** die Breite der Kuppeln. Diese Demo misst, wie s
 )
 st.caption(
     "Anders als die Fall-Demos im Portfolio, die an einem Anwendungsfall mehrere Verfahren vergleichen, zeigt diese Demo - siebtes Stück der Anomalie-Erkennung-Linie der \"Konzepte\"-Reihe - **ein** Verfahren an einem wachsenden Beispiel. "
-    "Szenario, LOF, Isolation Forest und die robuste Schätzung der Wurzel sind wortgleich aus den Vorgänger-Demos übernommen (die klassische Schätzung entfällt, damit die Balken lesbar bleiben); ECOD tritt nur im Szenarien-Experiment als Kontrast auf. "
+    "Szenario, LOF, Isolation Forest und die robuste Schätzung der Wurzel sind wortgleich aus den Vorgänger-Demos übernommen (die klassische Schätzung entfällt, damit die Balken lesbar bleiben); ECOD tritt nur als Kontrast auf (im Szenarien-Experiment; seine AUC steht auch in den Hilfetexten und im Lücken-Hinweis). "
     "Die Linie hat keinen Konvergenzpunkt; die One-Class SVM ist ein eigener Ast, ihr Nachfolger ist Deep SVDD (gelernte Merkmalsabbildung statt festem Kernel; eigene Demo)."
 )
 
@@ -562,7 +562,7 @@ if st.session_state.get("cost_on"):
     with st.spinner("Messe die Rechenzeit..."):
         ct = _costs(tuple(kv for kv in base_data if kv[0] not in ("n", "n_noise")), settings)
     st.plotly_chart(build_costs(ct["times"]), width="stretch", key="cost_chart")
-    st.caption("Mittel über 3 feste Datensätze (Zeiten rechnerabhängig, nur die Größenordnungen zählen). Die One-Class SVM braucht im gemessenen Bereich (bis 600 Touren) höchstens etwa 15 ms - so viel wie der LOF (bei 600 Touren 15 ms) und weit weniger als der Isolation Forest (60-390 ms). "
+    st.caption("Mittel über 3 feste Datensätze (Zeiten rechnerabhängig, nur die Größenordnungen zählen). Die One-Class SVM braucht im gemessenen Bereich (bis 600 Touren) höchstens einige zehn ms (bei 600 Touren etwa 13-22 ms in mehreren Läufen) - so viel wie der LOF (bei 600 Touren etwa 15-20 ms) und weit weniger als der Isolation Forest (etwa 70-620 ms). "
                "Die Kernmatrix wächst quadratisch: 0.08 / 0.72 / 2.9 MB bei 100 / 300 / 600 Touren (8 · n² Byte); bei 10 000 Touren wären es 800 MB - gerechnet, nicht gemessen. Der Löser braucht etwa n Schritte (109 / 330 / 589 bei 100 / 300 / 600 Touren, 12 Merkmale).")
 
 st.markdown("---")
@@ -581,7 +581,7 @@ st.markdown(
 | **Viele irrelevante Merkmale** | Mit der Voreinstellung γ₀ sinkt der Recall an der Schwelle bei 40 Rauschmerkmalen von 0.52 auf 0.25 (F1 0.39); erst ein breiter Kernel (0.1 · γ₀) stellt F1 0.92 wieder her. | Feature Bagging, breiter Kernel |
 | **Die Grenze folgt der Struktur, nicht der Abhängigkeit** | Der Korrelationsbruch wird mit γ₀ nur bedingt erkannt (AUC 0.88, F1 0.30; LOF 0.99, robust 1.00); mit ν = 0.3 und γ = 2 · γ₀ steigt die AUC auf 0.98, aber der F1 bleibt bei 0.57, weil die Schwelle ν der Touren markiert. | LOF, Wurzel |
 | **Die Lücke** | Nur bei passendem γ über Raten (AUC 0.64 bzw. 0.82 mit 2 bzw. 3 Betriebsarten bei γ₀), und die Schwelle findet sie kaum (Recall 3 % bzw. 1 %). | (keiner) |
-| **Platz für die Kernmatrix** | 8 · n² Byte: 2.9 MB bei 600 Touren, 800 MB bei 10 000 (gerechnet). Im gemessenen Bereich ist die Rechenzeit unkritisch (höchstens etwa 15 ms). | Isolation Forest, ECOD |
+| **Platz für die Kernmatrix** | 8 · n² Byte: 2.9 MB bei 600 Touren, 800 MB bei 10 000 (gerechnet). Im gemessenen Bereich ist die Rechenzeit unkritisch (höchstens einige zehn ms). | Isolation Forest, ECOD |
 """
 )
 st.caption(
